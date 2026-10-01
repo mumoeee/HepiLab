@@ -1,0 +1,36 @@
+/* style.css — gaya khusus app 3D (gaya umum ada di shared/base.css). */
+/* Header viewport (bar tetap, tidak menutupi model) */
+.cvw{display:flex;flex-direction:column;min-width:0;min-height:0}
+.cvw>.cv{flex:1;min-height:0}
+.vh{flex:none;display:flex;align-items:center;gap:6px;padding:4px 8px;background:var(--pn);border-bottom:1px solid var(--ln);overflow-x:auto;scrollbar-width:none}
+.vh::-webkit-scrollbar{display:none}
+.vh>*{flex:none}
+.vh select,.vh>button{background:transparent;border:1px solid transparent;padding:4px 9px}
+.vh select:hover,.vh>button:hover{background:var(--p2)}
+.vh>button.on{background:var(--ac);color:#1d1507}
+.vh .grp{background:var(--p2);border:0;border-radius:8px}
+.vh .vs{width:1px;height:18px;background:var(--ln);margin:0 2px}
+.vh .fl{flex:1;min-width:8px}
+.vh>.cta{background:var(--fd);color:#fff;font-weight:600}
+.vh>.cta:hover{background:#ea5a8b}
+.stats{right:12px;bottom:8px;color:var(--mu);font-size:11.5px;pointer-events:none}
+
+/* Panel kanan: bisa dilipat */
+.box h4{cursor:pointer;display:flex;align-items:center;gap:6px}
+.box h4::before{content:'▾';font-size:10px}
+.box.cl h4::before{content:'▸'}
+.box.cl>*:not(h4){display:none}
+#outl{max-height:200px;overflow:auto}
+
+/* Modal hasil Unfold */
+#unf{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:9}
+#unf[hidden]{display:none}
+#unf .m{background:var(--pn);border:1px solid var(--ln);border-radius:14px;width:min(920px,94vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+#unf .m>div{padding:12px 16px;display:flex;gap:10px;align-items:center}
+#unf svg{background:#f3ecdf;margin:0 16px;border-radius:10px;height:min(52vh,460px)}
+@media(max-width:820px){#unf .m>div{flex-wrap:wrap}}
+
+/* Panel operator (Extrude/Inset...) */
+#vp{position:relative}
+#opp{position:absolute;left:10px;bottom:34px;background:var(--pn);border:1px solid var(--ln);border-radius:10px;padding:8px 10px;display:flex;gap:8px;align-items:center;font-size:12px;z-index:5;box-shadow:var(--shadow)}
+#opp[hidden]{display:none}#opp input[type=number]{width:64px}
