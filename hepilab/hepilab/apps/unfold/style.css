@@ -1,9 +1,0 @@
-/* style.css — khusus app Unfold: dua kanvas berdampingan [Pola 2D | Model 3D] + panel. Warna & kontrol dasar dari shared/base.css */
-#wU.ws{grid-template-columns:1fr 1fr 240px}
-#wU .cv+.cv{border-left:1px solid var(--ln)}
-#c2{background:#17191c}#c3{background:var(--bg)}
-.lab{top:8px;left:10px;color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:.08em;pointer-events:none}
-.leg{display:flex;align-items:center;gap:7px;color:var(--mu);font-size:12px;margin-bottom:4px}
-.leg i{display:inline-block;width:26px;height:0;border-top:2px solid}
-#info{line-height:1.6}
-@media(max-width:820px){#wU.ws{grid-template-columns:1fr;grid-template-rows:1fr 1fr}#wU .cv+.cv{border-left:0;border-top:1px solid var(--ln)}}
