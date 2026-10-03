@@ -1,0 +1,121 @@
+/* style.css — khusus app Unfold. Warna & kontrol dasar dari shared/base.css.
+   Susunan: [bilah alat + Pola 2D] | [Model 3D + bilah lipat] | panel samping.
+   Bilah alat/lipat adalah saudara kanvas (bukan melayang di atasnya) → tidak ada yang saling menutupi.
+   Panel samping jadi laci (drawer) di HP: tombol ☰ Panel di header membuka/menutup. */
+#c2{background:#17191c}#c3{background:var(--bg)}
+.leg{display:flex;align-items:center;gap:7px;color:var(--mu);font-size:12px;margin-bottom:4px}
+.leg i{display:inline-block;width:26px;height:0;border-top:2px solid}
+#info{line-height:1.6}
+.chk{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px;cursor:pointer}
+.dim{left:8px;bottom:6px;padding:2px 7px;border-radius:5px;background:rgba(20,22,26,.7);color:var(--mu);font-size:11px;pointer-events:none;position:absolute}
+.tb button[aria-pressed=true],.fb button[aria-pressed=true]{background:rgba(232,163,61,.18);border-color:#e8a33d}
+
+/* ---- Desktop: 3 kolom ---- */
+#wU.ws{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 240px;grid-template-rows:minmax(0,1fr);min-height:0}
+#v2,#v3{position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+#v2{grid-column:1;grid-row:1}#v3{grid-column:2;grid-row:1;border-left:1px solid var(--ln)}
+#wU .side{grid-column:3;grid-row:1;min-height:0;overflow:auto;border-left:1px solid var(--ln)}
+.cw{position:relative;flex:1 1 0;min-width:0;min-height:0}
+.cw canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.lab{position:absolute;top:9px;left:10px;right:112px;color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:.08em;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.tb,.fb{display:flex;align-items:center;gap:4px;padding:4px 6px;flex:none;background:rgba(127,127,127,.08);overflow:auto;scrollbar-width:none}
+.tb{border-bottom:1px solid var(--ln)}.fb{border-top:1px solid var(--ln)}
+.tb::-webkit-scrollbar,.fb::-webkit-scrollbar{display:none}
+.tb button,.fb button{flex:none;display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:34px;height:32px;padding:0 9px;border-radius:7px;border:1px solid var(--ln);background:transparent;color:inherit;font:inherit;font-size:13px;cursor:pointer}
+.tb button:hover,.fb button:hover,.tb button:active,.fb button:active{background:rgba(127,127,127,.2)}
+.tb button i{font-style:normal;font-size:15px;line-height:1}
+.tb .sep{flex:none;width:1px;height:20px;margin:0 3px;border:0;background:var(--ln)}
+.fb .mu{flex:none;font-size:12px}.fb input[type=range]{flex:1 1 auto;min-width:0}
+@media (pointer:coarse){.tb button,.fb button{min-height:38px;min-width:38px}}
+
+/* ---- Laci panel (HP): dipakai di potret & lanskap ---- */
+@media (max-width:820px) and (orientation:portrait),(orientation:landscape) and (max-height:540px),(orientation:landscape) and (max-width:900px){
+ .tb button span{display:none}
+ #wU .side{display:flex;flex-direction:column;gap:8px;padding:10px;z-index:20;background:var(--bg);border-left:1px solid var(--ln);box-shadow:-10px 0 28px rgba(0,0,0,.5);
+  justify-self:end;width:min(86vw,320px);transform:translateX(105%);visibility:hidden;transition:transform .2s,visibility .2s}
+ #wU.sp .side{transform:none;visibility:visible}
+}
+/* ---- Potret: 2D di atas, 3D di bawah ---- */
+@media (max-width:820px) and (orientation:portrait){
+ #wU.ws{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr)}
+ #v2{grid-column:1;grid-row:1}#v3{grid-column:1;grid-row:2;border-left:0;border-top:1px solid var(--ln)}
+ #wU .side{grid-column:1;grid-row:1 / 3}
+}
+/* ---- Lanskap: 2D kiri (bilah alat tegak di tepi kiri), 3D kanan ---- */
+@media (orientation:landscape) and (max-height:540px),(orientation:landscape) and (max-width:900px){
+ #wU.ws{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);padding-left:env(safe-area-inset-left,0);padding-right:env(safe-area-inset-right,0)}
+ #v2{grid-column:1;grid-row:1;flex-direction:row}#v3{grid-column:2;grid-row:1}
+ #wU .side{grid-column:1 / 3;grid-row:1;width:min(48vw,320px)}
+ .tb{flex-direction:column;align-items:stretch;gap:3px;padding:4px;overflow-x:hidden;overflow-y:auto;border-bottom:0;border-right:1px solid var(--ln)}
+ .tb button{height:30px;min-height:30px;min-width:32px;padding:0 6px}.tb .sep{width:auto;height:1px;margin:2px 0}
+ .fb{padding:2px 6px}.fb button{height:30px;min-height:30px}
+}
+
+/* ---- Teks pola, dialog ekspor ---- */
+.trow{border:1px solid var(--ln);border-radius:8px;padding:6px;margin-top:6px}.trow.on{border-color:#5fc4b5}
+.trow input[type=text]{width:100%;margin-bottom:5px}
+.trow2{display:flex;gap:5px;align-items:center;flex-wrap:wrap}.trow2 input[type=number]{width:54px}
+.trow2 input[type=color],.dr input[type=color]{width:34px;height:28px;padding:0;border:1px solid var(--ln);background:none}
+.trow2 button{margin-left:auto;padding:2px 8px}
+.dlg{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:10px}
+.dlg[hidden]{display:none}
+.dlgp{background:var(--bg);color:inherit;border:1px solid var(--ln);border-radius:12px;width:min(1000px,100%);max-height:100%;display:flex;flex-direction:column;overflow:hidden}
+.dlgh,.dlgf2{display:flex;align-items:center;gap:8px;padding:10px 14px;flex:none}.dlgh{justify-content:space-between;border-bottom:1px solid var(--ln)}
+.dlgf2{justify-content:flex-end;flex-wrap:wrap;border-top:1px solid var(--ln)}
+.dlgb{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:14px;padding:12px 14px;overflow:auto;min-height:0}
+@media (max-width:760px){.dlgb{grid-template-columns:minmax(0,1fr)}}
+.dlgp fieldset{border:1px solid var(--ln);border-radius:8px;margin:0 0 10px;padding:8px 10px}
+.dlgp legend{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--mu);padding:0 4px}
+.dlgp input[type=text]{width:100%}
+.dr{display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap}.dr input[type=number]{width:62px}
+.dlgp button{padding:6px 12px;border-radius:7px;border:1px solid var(--ln);background:transparent;color:inherit;font:inherit;font-size:13px;cursor:pointer}
+.dlgp button.pri{background:#e8a33d;color:#1d1507;border-color:#e8a33d;font-weight:600}
+.pvbar{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px}
+#pv svg{display:block;max-width:100%;margin:0 auto}
+
+/* ---- Tampilan rapi: tombol panel, perbesar panel, bagian panel yang bisa dilipat ---- */
+.lab{transition:opacity .6s}.lab.gone{opacity:0}
+.pb{position:absolute;top:6px;right:8px;z-index:6;display:flex;gap:4px}
+.pb button{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;padding:0;border-radius:8px;border:1px solid var(--ln);background:rgba(20,22,26,.72);color:var(--mu);cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.pb button:hover,.pb button:active{color:#fff;background:rgba(232,163,61,.28);border-color:#e8a33d}
+@media (pointer:coarse){.pb button{width:36px;height:36px}}
+#wU button:focus-visible,#wU input:focus-visible,#wU select:focus-visible,.dlgp button:focus-visible{outline:2px solid #e8a33d;outline-offset:1px}
+
+/* Satu panel diperbesar (tombol ⛶ di pojok panel; Esc kembali) */
+#wU.max2 #v3,#wU.max3 #v2{display:none}
+#wU.max2 #v2{grid-column:1 / 3}
+#wU.max3 #v3{grid-column:1 / 3;grid-row:1;border-left:0}
+@media (max-width:820px) and (orientation:portrait){
+ #wU.max2 #v2{grid-column:1;grid-row:1 / 3}
+ #wU.max3 #v3{grid-column:1;grid-row:1 / 3;border-top:0}
+}
+
+/* Panel samping: bagian yang bisa dilipat */
+#wU .side{display:flex;flex-direction:column;gap:8px;padding:10px}
+details.box{border:1px solid var(--ln);border-radius:10px;background:rgba(127,127,127,.05);padding:0;overflow:hidden;flex:none}
+details.box>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:9px 12px;user-select:none;-webkit-user-select:none}
+details.box>summary::-webkit-details-marker{display:none}
+details.box>summary:hover{background:rgba(127,127,127,.1)}
+details.box>summary h4{margin:0;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mu)}
+details.box>summary::after{content:'▾';color:var(--mu);transition:transform .15s}
+details.box:not([open])>summary::after{transform:rotate(-90deg)}
+details.box>.bd{padding:2px 12px 12px}
+.hint{margin-top:6px;font-size:11px}
+.sub{margin:10px 0 5px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu)}.sub:first-child{margin-top:0}
+.gb button.pri{background:#e8a33d;color:#1d1507;border-color:#e8a33d;font-weight:600}
+.gb button.pri:hover{filter:brightness(1.08)}
+/* Info model: chip */
+#info .nm{display:block;margin-bottom:7px;word-break:break-word;color:inherit}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chips span{padding:2px 9px;border-radius:999px;background:rgba(127,127,127,.18);font-size:12px;color:inherit}
+.warn{margin-top:7px;color:#e88;font-weight:600;font-size:12px}
+/* Gaya garis: kotak warna ringkas */
+.sh{margin:8px 0 5px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu)}.sh:first-child{margin-top:0}
+.sw3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.sw3.two{grid-template-columns:repeat(2,1fr)}
+.sw3 label{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--mu);cursor:pointer}
+.sw3 input[type=color]{width:100%;height:30px;padding:0;border:1px solid var(--ln);border-radius:7px;background:none;cursor:pointer}
+.sw3 input:disabled{opacity:.3;cursor:not-allowed}
+.nums{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.nums label{display:flex;flex-direction:column;gap:3px;font-size:11px;color:var(--mu)}
+.nums input{width:100%;min-width:0}.nums em{display:none}
