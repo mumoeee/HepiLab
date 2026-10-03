@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#1a1c1f"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>Vector Workspace — HepiLab</title>
+<link rel="manifest" href="../../manifest.webmanifest"><link rel="icon" href="../../icons/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="../../icons/icon-192.png">
+<link rel="stylesheet" href="../../shared/base.css"><link rel="stylesheet" href="style.css"></head>
+<body data-app="vector">
+<header>
+ <a class="logo" href="../../" title="Kembali ke Home"><img src="../../icons/icon.svg" width="24" height="24" alt="">HepiLab</a>
+ <span class="crumb">Vector Workspace</span>
+ <nav id="nav"></nav><button id="menu">☰ Panel</button>
+</header>
+
+<section id="wV" class="ws">
+ <div class="tools" id="tV">
+  <button data-k="vundo" title="Undo (Ctrl+Z)">↶</button><button data-k="vredo" title="Redo (Ctrl+Shift+Z)">↷</button><hr>
+  <button data-v="v" title="Select (V)">↖</button><button data-v="n" title="Node edit (N) — klik ganda pada garis untuk tambah node, Del untuk hapus">◇</button><hr>
+  <button data-v="r" title="Rectangle (R)">▭</button><button data-v="c" title="Circle (C)">○</button><button data-v="l" title="Line (L)">╱</button><button data-v="y" title="Polygon (Y)">⬡</button><button data-v="s" title="Bintang (S) — jumlah sudut = kolom Sisi">★</button><button data-v="u" title="Persegi sudut bulat (U) — atur Radius di panel">▢</button><button data-v="p" title="Pen (P) — klik titik, klik-seret untuk kurva, dobel-klik/Enter selesai">✒</button><button data-v="t" title="Text (T)">T</button>
+ </div>
+ <div class="cv"><svg id="vsvg"><defs><pattern id="gr" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="#e3ddd0" stroke-width="1"/></pattern></defs>
+  <rect width="100%" height="100%" fill="#101113"/><g id="vw"><rect width="1000" height="700" fill="#fbf8f2"/><rect width="1000" height="700" fill="url(#gr)"/><g id="vsh"></g><g id="vui"></g></g></svg>
+  <div class="ov top" id="vbar"><button class="on" id="penOk">✓ Selesai</button><button id="penNo">Batal</button></div>
+  <div class="ov" id="vxbar">
+   <button data-na="add">＋ Node</button><button data-na="del">－ Node</button><button data-na="line">╱ Lurus</button><button data-na="curve">⌒ Kurva</button><button data-na="c">Cusp</button><button data-na="s">Halus</button><button data-na="y">Simetris</button><button data-na="all">≈ Haluskan semua</button><button data-na="flat">▱ Lurus semua</button><button data-na="close">⭘ Tutup/Buka</button>
+  </div>
+  <div class="ov hint" id="vhint">Zoom: scroll · Pan: Space+seret / klik-tengah · seret kotak / Shift+klik: multi-pilih · Ctrl+A: semua · Kanvas 1000×700</div></div>
+ <aside class="side">
+  <div class="box"><h4>Layers</h4><div id="lys"></div><button id="addL" style="margin-top:6px;width:100%">+ Layer baru</button></div>
+  <div class="box"><h4>Stroke &amp; Fill</h4>
+   <div class="f2"><span>Fill</span><input type="color" id="vf"><label class="mu"><input type="checkbox" id="vnf"> tanpa</label><span></span></div>
+   <div class="f2"><span>Stroke</span><input type="color" id="vstk"><span>Tebal</span><input type="number" id="vsw" min="0" step=".5"></div>
+   <div class="f2"><label class="mu" style="grid-column:span 2"><input type="checkbox" id="vdash"> garis putus</label><span>Sisi ⬡★</span><input type="number" id="vsides" min="3" max="20" value="6"></div>
+   <div class="f2" id="vtxt"><span>Teks</span><input type="text" id="vtx" style="grid-column:span 3"></div>
+  </div>
+  <div class="box"><h4>Posisi &amp; ukuran</h4>
+   <div class="f2"><span>X</span><input type="number" data-b="x"><span>Y</span><input type="number" data-b="y"></div>
+   <div class="f2"><span>W</span><input type="number" data-b="w"><span>H</span><input type="number" data-b="h"></div>
+   <div class="gb"><button data-rot="-15">↺ 15°</button><button data-rot="15">↻ 15°</button><button id="vdup">Duplikat</button><button id="vdel">Hapus</button></div></div>
+  <div class="box"><h4>Alignment</h4><div class="al"><button data-al="l" title="Kiri">⇤</button><button data-al="cx" title="Tengah H">↔</button><button data-al="r" title="Kanan">⇥</button><button data-al="t" title="Atas">⤒</button><button data-al="cy" title="Tengah V">↕</button><button data-al="b" title="Bawah">⤓</button></div>
+   <div class="mu" style="margin-top:6px">Satu objek: rata ke kanvas. Banyak objek: rata antar objek.</div></div>
+  <div class="box"><h4>Susun &amp; Grup</h4><div class="gb"><button id="vxFront">⬆ Ke depan</button><button id="vxBack">⬇ Ke belakang</button><button id="vxFlipH">⇋ Balik H</button><button id="vxFlipV">⥮ Balik V</button><button id="vxGrp">▣ Grup</button><button id="vxUng">▢ Lepas grup</button></div></div>
+  <div class="box"><h4>Kanvas &amp; File</h4>
+   <div class="f2"><span>Snap</span><select id="vxSnap" style="grid-column:span 3;width:100%"><option value="0">Off</option><option value="5">Grid 5</option><option value="10">Grid 10</option><option value="25">Grid 25</option><option value="50">Grid 50</option></select></div>
+   <div class="f2"><span>Radius</span><input type="number" id="vxRad" min="0" value="20" style="grid-column:span 3"></div>
+   <div class="gb"><button id="vxSave">💾 Simpan .json</button><button id="vxOpen">📂 Buka</button><button id="vxSvg">⇩ Ekspor SVG</button><button id="vxPng">⇩ Ekspor PNG</button><button id="vxNew" style="grid-column:span 2">Kanvas baru</button></div></div>
+ </aside>
+</section>
+<div id="st"><span id="stm">Siap.</span></div>
+
+<!-- Pustaka bersama (urutan penting) -->
+<script src="../../apps/registry.js"></script>
+<script src="../../shared/util.js"></script>
+<script src="../../shared/transfer.js"></script>
+<script src="../../shared/shell.js"></script>
+<!-- Kode app Vector. Urutan penting: semua file berbagi satu lingkup global, main.js paling akhir. -->
+<script src="js/model.js"></script>
+<script src="js/panels.js"></script>
+<script src="js/tools.js"></script>
+<script src="js/pointer.js"></script>
+<script src="js/bezier.js"></script>
+<script src="js/bezier-pointer.js"></script>
+<script src="js/arrange.js"></script>
+<script src="js/history.js"></script>
+<script src="js/controls.js"></script>
+<script src="js/main.js"></script>
+</body></html>

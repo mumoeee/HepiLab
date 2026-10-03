@@ -1,0 +1,5 @@
+/* style.css — gaya khusus app Vector (gaya umum ada di shared/base.css). */
+#vbar{display:none}                       /* bar "Selesai/Batal" pen — ditampilkan lewat JS saat pen aktif */
+#vxbar{display:none;bottom:34px;left:10px;right:10px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;pointer-events:none}
+#vxbar button{flex:none;pointer-events:auto;background:var(--pn);border:1px solid var(--ln)}   /* bar node — hanya di alat Node */
+#vxbar button:hover{background:var(--p2)}

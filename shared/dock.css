@@ -1,0 +1,74 @@
+/* dock.css — tampilan "dock" ala Blender: header ramping, toolbar tegak di kiri, panel samping rapat dengan judul + bagian lipat,
+   lebar panel bisa ditarik. Aktif bila .ws punya kelas .dk (dipasang oleh shared/dock.js saat lanskap / desktop).
+   Gaya kotak panel (details.box) berlaku di semua ukuran; sisanya hanya di .ws.dk. Warna tetap dari base.css. */
+
+/* ---------- Header ramping di lanskap (HP & desktop) ---------- */
+@media (orientation:landscape){header{height:40px;gap:10px;padding:0 10px}}
+@media (orientation:landscape) and (max-width:900px){.crumb{display:none}nav a span{display:none}nav a{padding:5px 9px}}
+
+/* ---------- Kotak panel (bagian yang bisa dilipat) ---------- */
+details.box{border:1px solid var(--ln);border-radius:10px;background:rgba(127,127,127,.05);padding:0;overflow:hidden;flex:none}
+details.box>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:9px 12px;user-select:none;-webkit-user-select:none}
+details.box>summary::-webkit-details-marker{display:none}
+details.box>summary:hover{background:rgba(127,127,127,.1)}
+details.box>summary h4{margin:0;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mu)}
+details.box>summary::after{content:'▾';color:var(--mu);transition:transform .15s}
+details.box:not([open])>summary::after{transform:rotate(-90deg)}
+details.box>.bd{padding:2px 12px 12px}
+.side{gap:8px}
+.sd-h,#spl{display:none}
+
+/* ---------- Dock (lanskap / desktop) ---------- */
+.ws.dk{grid-template-columns:auto minmax(0,1fr) var(--pw,260px);grid-template-rows:minmax(0,1fr)}
+.ws.dk:not(.sp){grid-template-columns:auto minmax(0,1fr) 0}
+.ws.dk>.tools{grid-column:1;grid-row:1}
+.ws.dk>.cvw{grid-column:2;grid-row:1}
+.ws.dk:not(.sp) .side{display:none}
+.ws.dk .side{display:flex;grid-column:3;grid-row:1;position:static;left:auto;right:auto;top:auto;bottom:auto;max-height:none;height:auto;align-self:stretch;min-height:0;
+ width:auto;padding:0;gap:0;overflow-x:hidden;overflow-y:auto;border:0;border-left:1px solid #000;border-radius:0;box-shadow:none;z-index:1;font-size:11.5px;overscroll-behavior:contain}
+
+/* garis pemisah yang bisa ditarik */
+.ws.dk.sp #spl{display:block;position:absolute;top:0;bottom:0;right:var(--pw,260px);width:20px;margin-right:-10px;z-index:30;cursor:col-resize;touch-action:none}
+.ws.dk.sp #spl::after{content:'';position:absolute;top:0;bottom:0;left:9px;width:2px;background:transparent;transition:background .15s}
+.ws.dk.sp #spl::before{content:'';position:absolute;top:50%;left:7px;width:6px;height:28px;margin-top:-14px;border-radius:3px;background:var(--mu);opacity:.55}
+.ws.dk #spl:hover::after,.ws.dk #spl.on::after{background:var(--ac)}
+
+/* judul panel */
+.ws.dk .sd-h{position:sticky;top:0;z-index:3;display:block;flex:none;margin:0;padding:0;border-bottom:1px solid #000;background:linear-gradient(rgba(127,127,127,.16),rgba(127,127,127,.16)),var(--bg)}
+.ws.dk .sd-h .r1{display:flex;align-items:center;justify-content:space-between;min-height:26px;padding:0 3px 0 10px}
+.ws.dk .sd-h b{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mu)}
+.ws.dk .sd-h #spX{width:28px;height:22px;min-height:22px;padding:0;font-size:12px;border:0;border-radius:4px;background:transparent;color:var(--mu)}
+.ws.dk .sd-h #spX:hover{background:rgba(127,127,127,.28);color:inherit}
+
+/* bagian panel = kotak Blender: judul tipis, panah di kiri, isi rapat */
+.ws.dk details.box{border:0;border-bottom:1px solid #000;border-radius:0;background:none}
+.ws.dk details.box>summary{flex-direction:row-reverse;justify-content:flex-end;gap:6px;min-height:26px;padding:0 8px;background:rgba(127,127,127,.12)}
+.ws.dk details.box>summary h4{font-size:10.5px;letter-spacing:.06em}
+.ws.dk details.box>.bd{padding:6px 8px 8px}
+.ws.dk .side input[type=number],.ws.dk .side input[type=text],.ws.dk .side select{min-height:24px;height:24px;font-size:11.5px;padding:0 6px;border-radius:4px}
+.ws.dk .side input[type=color]{height:22px}
+.ws.dk .side button{min-height:24px;font-size:11.5px;padding:0 8px;border-radius:4px}
+.ws.dk .side .f,.ws.dk .side .f2{margin-bottom:3px;gap:4px}
+.ws.dk .side .row{padding:3px 6px;gap:6px}
+.ws.dk .side label{font-size:11.5px}
+.ws.dk .side .mu{font-size:11px}
+@media(pointer:coarse){
+ .ws.dk .side input[type=number],.ws.dk .side input[type=text],.ws.dk .side select{font-size:16px;height:32px;min-height:32px}
+ .ws.dk .side input[type=color]{height:28px}
+ .ws.dk .side button{min-height:32px}
+ .ws.dk .side .row{padding:6px 7px}
+}
+
+/* toolbar tegak di kiri */
+.ws.dk>.tools{flex-direction:column;align-items:center;width:auto;overflow-x:hidden;overflow-y:auto;border-right:1px solid #000;border-bottom:0;padding:4px;gap:2px;scrollbar-width:none}
+.ws.dk>.tools::-webkit-scrollbar{display:none}
+.ws.dk>.tools button{flex:none;width:30px;height:30px;min-width:30px;min-height:30px;padding:0;font-size:15px;border-radius:5px}
+.ws.dk>.tools hr{flex:none;width:22px;height:0;margin:3px 0;border:0;border-top:1px solid var(--ln)}
+.ws.dk>.tools .ts small{display:none}
+.ws.dk>.tools .ts b{font-size:14px}
+@media(pointer:coarse){.ws.dk>.tools button{width:32px;height:32px;min-width:32px;min-height:32px}}
+/* layar pendek (HP lanskap): toolbar 2 kolom supaya semua alat muat tanpa digulir */
+@media (orientation:landscape) and (max-height:520px){
+ .ws.dk>.tools{display:grid;grid-template-columns:repeat(2,auto);grid-auto-rows:min-content;justify-content:center;justify-items:center;align-content:start;gap:2px}
+ .ws.dk>.tools hr{grid-column:1/-1;width:60px;margin:3px 0}
+}
